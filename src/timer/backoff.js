@@ -1,31 +1,28 @@
-'use strict';
+// @flow
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.backOffLinear = exports.backOffFactorial = exports.backOffFibonacci = undefined;
+import curry from '../functional/curry';
+import compose from '../functional/compose';
+import identity from '../functional/identity';
+import factorial from '../math/factorial';
+import fibonacci from '../math/fibonacci';
+import multiply from '../math/multiply';
 
-var _math = require('../math');
+const backOff = curry((
+  intervalFn: Function,
+  timeout: number,
+  fn: Function,
+): Promise<*> => {
+  const checkTimedOut = (timeoutMax, startTime) => currentTime =>
+    (currentTime - startTime > timeoutMax);
+  const hasTimedOut = checkTimedOut(timeout, (+new Date()));
 
-var _functional = require('../functional');
+  return new Promise((resolve, reject) => {
+    const stop = arg => ((arg instanceof Error) ?
+      reject(arg) :
+      resolve(arg));
 
-var backOff = (0, _functional.curry)(function (intervalFn, timeout, fn) {
-  var checkTimedOut = function checkTimedOut(timeoutMax, startTime) {
-    return function (currentTime) {
-      return currentTime - startTime > timeoutMax;
-    };
-  };
-  var hasTimedOut = checkTimedOut(timeout, +new Date());
-
-  return new Promise(function (resolve, reject) {
-    var stop = function stop(arg) {
-      return arg instanceof Error ? reject(arg) : resolve(arg);
-    };
-
-    var next = function next() {
-      var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-
-      if (!hasTimedOut(+new Date())) {
+    const next = (i = 1) => {
+      if (!hasTimedOut((+new Date()))) {
         setTimeout(fn.bind(null, next.bind(null, i + 1), stop), intervalFn(i));
       } else {
         reject(new Error('BACKOFF_TIMEOUT'));
@@ -36,9 +33,7 @@ var backOff = (0, _functional.curry)(function (intervalFn, timeout, fn) {
   });
 });
 
-exports.default = backOff;
-var backOffFibonacci = exports.backOffFibonacci = backOff((0, _functional.compose)((0, _math.multiply)(1000), _math.fibonacci));
-
-var backOffFactorial = exports.backOffFactorial = backOff((0, _functional.compose)((0, _math.multiply)(1000), _math.factorial));
-
-var backOffLinear = exports.backOffLinear = backOff((0, _functional.compose)((0, _math.multiply)(1000), _functional.identity));
+export default backOff;
+export const backOffFibonacci = backOff(compose(multiply(1000), fibonacci));
+export const backOffFactorial = backOff(compose(multiply(1000), factorial));
+export const backOffLinear = backOff(compose(multiply(1000), identity));
