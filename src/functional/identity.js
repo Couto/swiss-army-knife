@@ -1,1 +1,3 @@
-export default x => x;
+// @flow
+
+export default <A>(x: A): A => x;

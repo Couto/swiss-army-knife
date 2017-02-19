@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * Like parallel.js, this was used to manage xhr requests, but to ensure that
  * they would run in series (only call the next function, after the previous
@@ -20,6 +22,6 @@
  * ]);
  *
  */
-export default fns => (function next(...args) {
-  return fns.length && fns.shift()(...[...args, next]);
+export default (fns: Function[]): void => (function next(...args) {
+  return fns.length ? fns.shift()(...[...args, next]) : undefined;
 }());

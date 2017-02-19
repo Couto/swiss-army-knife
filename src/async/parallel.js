@@ -1,3 +1,5 @@
+// @flow
+
 /*
  * Originally this function was used to organize callbacks, usually to manage
  * parallel xhr requests.
@@ -28,7 +30,7 @@
  * ], (args1, args2, args4) => console.log('All done!'))
  */
 
-export default (tasks, callback) => {
+export default (tasks: Function[], callback: Function): void => {
   let counter = 0;
   const results = {};
   // Flag to know if it should run callbacks
