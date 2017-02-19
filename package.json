@@ -20,13 +20,16 @@
     "nyc": "^10.1.2"
   },
   "scripts": {
-    "flow": "flow .",
+    "flow": "flow check .",
     "lint": "eslint .",
     "compile": "babel -d dist ../src/*/*.js ",
-    "test": "ava"
+    "test": "nyc ava"
   },
   "ava": {
     "require": ["babel-register"],
     "babel": "inherit"
+  },
+  "nyc": {
+    "reporter": ["text-summary", "html"]
   }
 }
