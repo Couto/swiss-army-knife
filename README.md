@@ -1,5 +1,8 @@
 # Swiss-Army Knife
 
+[![build status](https://gitlab.com/Couto/swiss-army-knife/badges/master/build.svg)](https://gitlab.com/Couto/swiss-army-knife/commits/master)
+[![coverage report](https://gitlab.com/Couto/swiss-army-knife/badges/master/coverage.svg)](https://gitlab.com/Couto/swiss-army-knife/commits/master)
+
 ---
 
 Over the years, I've collected some scripts, that once in a while come to be
