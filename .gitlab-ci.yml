@@ -1,0 +1,5 @@
+image: node:6.9.5-alpine
+
+unit:
+  script:
+    - npm test
