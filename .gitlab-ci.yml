@@ -1,9 +1,12 @@
 image: registry.gitlab.com/couto/swiss-army-knife
 
+cache:
+  paths:
+  - node_modules/
+
 stages:
   - dependencies
   - tests
-
 
 dependencies:
   stage: dependencies
@@ -14,21 +17,22 @@ dependencies:
     paths:
       - swiss-army-knife.tgz
 
+# Test Stage
 
 eslint:
   stage: tests
   script:
-    - tar -xzfv swiss-army-knife.tgz
+    - tar -vxzf swiss-army-knife.tgz
     - yarn eslint
 
 flow:
   stage: tests
   script:
-    - tar -xzfv swiss-army-knife.tgz
+    - tar -vxzfv swiss-army-knife.tgz
     - yarn flow
 
 unit:
   stage: tests
   script:
-    - tar -xzfv swiss-army-knife.tgz
+    - tar -vxzfv swiss-army-knife.tgz
     - yarn test
