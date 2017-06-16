@@ -23,28 +23,28 @@ dependencies:
   script:
     - yarn install
     - yarn pack --filename swiss-army-knife.tgz
-  artifacts:
-    paths:
-      - swiss-army-knife.tgz
+  # artifacts:
+  #   paths:
+  #     - swiss-army-knife.tgz
 
 # Test Stage
 
 eslint:
   stage: tests
   script:
-    - tar -vxzf swiss-army-knife.tgz
+    # - tar -vxzf swiss-army-knife.tgz -C .
     - yarn eslint
 
 flow:
   stage: tests
   script:
-    - tar -vxzfv swiss-army-knife.tgz
+    # - tar -vxzfv swiss-army-knife.tgz -C .
     - yarn flow
 
 unit:
   stage: tests
   script:
-    - tar -vxzfv swiss-army-knife.tgz
+    # - tar -vxzfv swiss-army-knife.tgz -C .
     - yarn test
 
 # Build
