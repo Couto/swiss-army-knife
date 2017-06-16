@@ -2,12 +2,19 @@ module.exports = {
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype",
   ],
   "plugins": [
     "import",
-    "flowtype"
+    "flowtype",
+    "prettier"
   ],
+  "rules": {
+    "flowtype/no-weak-types": ["error"],
+    "prettier/prettier": ["error"]
+  },
   "settings": {
     "flowtype": {
       "onlyFilesWithFlowAnnotation": true

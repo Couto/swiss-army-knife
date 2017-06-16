@@ -1,0 +1,12 @@
+// @flow
+
+export type NullaryFn = <A>(x: A) => void;
+export type UnaryFn = <A, B>(x: A) => B;
+export type BinaryFn = <A, B, C>(x: A, y: B) => C;
+export type TernaryFn = <A, B, C, D>(x: A, y: B, z: C) => D;
+export type Quaternary = <A, B, C, D, E>(a: A, b: B, c: C, d: D) => E;
+export type QuinaryFn = <A, B, C, D, E, F>(a: A, b: B, c: C, d: D, e: E) => F;
+export type SenaryFn = <A, B, C, D, E, F, G>(a: A, b: B, c: C, d: D, e: E, g: G) => G;
+export type VariadicFn = <A, B>(...a:A) => B;
+
+export type EndomorphismFn = <A>(a: A) => A;

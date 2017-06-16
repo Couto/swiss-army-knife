@@ -22,6 +22,7 @@
  * ]);
  *
  */
-export default (fns: Function[]): void => (function next(...args) {
-  return fns.length ? fns.shift()(...[...args, next]) : undefined;
-}());
+export default (fns: Function[]): void =>
+  (function next(...args) {
+    return fns.length ? fns.shift()(...[...args, next]) : undefined;
+  })();

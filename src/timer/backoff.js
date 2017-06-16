@@ -7,22 +7,24 @@ import factorial from '../math/factorial';
 import fibonacci from '../math/fibonacci';
 import multiply from '../math/multiply';
 
-const backOff = curry((
-  intervalFn: Function,
-  timeout: number,
-  fn: Function,
-): Promise<*> => {
+type interval = number => number;
+type repeatableFn = (next: Function, stop: Function) => void;
+type milliseconds = number;
+
+function backOffTimer(
+  intervalFn: interval,
+  timeout: milliseconds,
+  fn: repeatableFn,
+): Promise<*> {
   const checkTimedOut = (timeoutMax, startTime) => currentTime =>
-    (currentTime - startTime > timeoutMax);
-  const hasTimedOut = checkTimedOut(timeout, (+new Date()));
+    currentTime - startTime > timeoutMax;
+  const hasTimedOut = checkTimedOut(timeout, +new Date());
 
   return new Promise((resolve, reject) => {
-    const stop = arg => ((arg instanceof Error) ?
-      reject(arg) :
-      resolve(arg));
+    const stop = arg => (arg instanceof Error ? reject(arg) : resolve(arg));
 
     const next = (i = 1) => {
-      if (!hasTimedOut((+new Date()))) {
+      if (!hasTimedOut(+new Date())) {
         setTimeout(fn.bind(null, next.bind(null, i + 1), stop), intervalFn(i));
       } else {
         reject(new Error('BACKOFF_TIMEOUT'));
@@ -31,7 +33,9 @@ const backOff = curry((
 
     fn(next, stop);
   });
-});
+}
+
+const backOff = curry(backOffTimer);
 
 export default backOff;
 export const backOffFibonacci = backOff(compose(multiply(1000), fibonacci));

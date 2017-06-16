@@ -1,8 +1,34 @@
 image: registry.gitlab.com/couto/swiss-army-knife
 
-unit:
+stages:
+  - dependencies
+  - tests
+
+
+dependencies:
+  stage: dependencies
   script:
     - yarn install
+    - yarn pack --filename swiss-army-knife.tgz
+  artifacts:
+    paths:
+      - swiss-army-knife.tgz
+
+
+eslint:
+  stage: tests
+  script:
+    - tar -xzfv swiss-army-knife.tgz
+    - yarn eslint
+
+flow:
+  stage: tests
+  script:
+    - tar -xzfv swiss-army-knife.tgz
     - yarn flow
-    - yarn lint
+
+unit:
+  stage: tests
+  script:
+    - tar -xzfv swiss-army-knife.tgz
     - yarn test

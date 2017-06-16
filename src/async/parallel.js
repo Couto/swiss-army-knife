@@ -43,24 +43,32 @@ export default (tasks: Function[], callback: Function): void => {
     const finalArgs = Object.keys(results).sort().map(val => results[val]);
     // If a callback function was given, call it, passing the
     // arguments
-    if (callback) { callback(...finalArgs); }
+    if (callback) {
+      callback(...finalArgs);
+    }
   };
   // Setter to disable callbacks
-  const cancel = () => { enabled = false; };
+  const cancel = () => {
+    enabled = false;
+  };
   // function that will be given to each task, so that each task can
   // notify when it's ready.
   const next = (id, ...args) => {
     // Save them in a final object
-    results[id.idx] = (args.length) ? args : undefined;
+    results[id.idx] = args.length ? args : undefined;
     // Increment counter.
     counter += 1;
     // If the current task has an individual callback, call it,
     // passing the arguments given by the task to the next function
     // and the cancel function to give the option to disable future callbacks
-    if (id.cb && enabled) { id.cb(...[cancel, ...args]); }
+    if (id.cb && enabled) {
+      id.cb(...[cancel, ...args]);
+    }
     // If the counter reached the total number of tasks, call the
     // 'done' function to parse the arguments for the final callback
-    if (counter === tasks.length && enabled) { done(); }
+    if (counter === tasks.length && enabled) {
+      done();
+    }
   };
 
   tasks.forEach((task, index) => {
@@ -69,6 +77,6 @@ export default (tasks: Function[], callback: Function): void => {
     // a function.
     // curry an object giving the current index of the task and
     // the individual callback if exists
-    (task.fn || task)(next.bind(undefined, { idx: index, cb: task.cb }));
+    (task.fn || task)(next.bind(undefined, {idx: index, cb: task.cb}));
   });
 };
