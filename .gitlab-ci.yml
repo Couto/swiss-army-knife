@@ -2,7 +2,7 @@ image: registry.gitlab.com/couto/swiss-army-knife
 
 cache:
   paths:
-  - node_modules/
+    - node_modules/
 
 stages:
   - dependencies
