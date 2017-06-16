@@ -15,6 +15,7 @@ cache:
 stages:
   - dependencies
   - tests
+  - build
 
 
 dependencies:
@@ -45,3 +46,10 @@ unit:
   script:
     - tar -vxzfv swiss-army-knife.tgz
     - yarn test
+
+# Build
+
+compile:
+  stage: build
+  script:
+    - yarn build
