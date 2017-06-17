@@ -24,7 +24,7 @@
   },
   "scripts": {
     "flow": "flow check .",
-    "lint": "eslint .",
+    "eslint": "eslint .",
     "compile": "babel -d dist ../src/*/*.js ",
     "test": "nyc ava"
   },
