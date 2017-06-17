@@ -1,6 +1,6 @@
 {
   "name": "swiss-army-knife",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Set of utility functions collected in the same place.",
   "main": "index.js",
   "repository": "https://gitlab.com/Couto/swiss-army-knife",
@@ -22,13 +22,15 @@
     "husky": "^0.13.4",
     "lint-staged": "^3.6.1",
     "nyc": "^11.0.2",
-    "prettier": "^1.4.4"
+    "prettier": "^1.4.4",
+    "standard-version": "^4.2.0"
   },
   "scripts": {
     "flow": "flow check .",
     "eslint": "eslint .",
     "compile": "babel -d dist ../src/*/*.js ",
     "test": "nyc ava",
+    "release": "standard-version",
     "precommit": "lint-staged"
   },
   "lint-staged": {
