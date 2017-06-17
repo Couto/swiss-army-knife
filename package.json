@@ -1,6 +1,6 @@
 {
   "name": "swiss-army-knife",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Set of utility functions collected in the same place.",
   "main": "index.js",
   "repository": "https://gitlab.com/Couto/swiss-army-knife",
