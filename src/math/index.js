@@ -1,3 +1,3 @@
-export {factorial} from './factorial';
-export {fibonacci} from './fibonacci';
-export {multiply} from './multiply';
+export { factorial } from './factorial';
+export { fibonacci } from './fibonacci';
+export { multiply } from './multiply';

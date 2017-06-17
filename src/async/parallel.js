@@ -1,5 +1,7 @@
 // @flow
 
+import { VariadicFn } from '../functional/types.js.flow';
+
 /*
  * Originally this function was used to organize callbacks, usually to manage
  * parallel xhr requests.
@@ -30,7 +32,10 @@
  * ], (args1, args2, args4) => console.log('All done!'))
  */
 
-export default (tasks: Function[], callback: Function): void => {
+export default (
+  tasks: VariadicFn<*, *>[],
+  callback: VariadicFn<*, *>
+): void => {
   let counter = 0;
   const results = {};
   // Flag to know if it should run callbacks
@@ -77,6 +82,6 @@ export default (tasks: Function[], callback: Function): void => {
     // a function.
     // curry an object giving the current index of the task and
     // the individual callback if exists
-    (task.fn || task)(next.bind(undefined, {idx: index, cb: task.cb}));
+    (task.fn || task)(next.bind(undefined, { idx: index, cb: task.cb }));
   });
 };

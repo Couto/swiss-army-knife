@@ -7,14 +7,17 @@ import factorial from '../math/factorial';
 import fibonacci from '../math/fibonacci';
 import multiply from '../math/multiply';
 
-type interval = number => number;
-type repeatableFn = (next: Function, stop: Function) => void;
-type milliseconds = number;
+import type { NullaryFn, UnaryFn } from '../functional/types.js.flow';
+
+type IntervalFn = UnaryFn<number, number>;
+type RepeatableFn = (next: NullaryFn<void>, stop: NullaryFn<void>) => void;
+
+type Milliseconds = number;
 
 function backOffTimer(
-  intervalFn: interval,
-  timeout: milliseconds,
-  fn: repeatableFn,
+  intervalFn: IntervalFn,
+  timeout: Milliseconds,
+  fn: RepeatableFn
 ): Promise<*> {
   const checkTimedOut = (timeoutMax, startTime) => currentTime =>
     currentTime - startTime > timeoutMax;
@@ -25,7 +28,7 @@ function backOffTimer(
 
     const next = (i = 1) => {
       if (!hasTimedOut(+new Date())) {
-        setTimeout(fn.bind(null, next.bind(null, i + 1), stop), intervalFn(i));
+        setTimeout(() => fn(() => next(i + 1), stop), intervalFn(i));
       } else {
         reject(new Error('BACKOFF_TIMEOUT'));
       }

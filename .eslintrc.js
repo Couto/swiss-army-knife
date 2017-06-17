@@ -13,7 +13,10 @@ module.exports = {
   ],
   "rules": {
     "flowtype/no-weak-types": ["error"],
-    "prettier/prettier": ["error"]
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "parser": "flow"
+    }]
   },
   "settings": {
     "flowtype": {
