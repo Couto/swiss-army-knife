@@ -34,8 +34,6 @@
   "lint-staged": {
     "*.js": [
       "eslint --fix",
-      "flow focus-check",
-      "nyc ava",
       "git add"
     ]
   },
