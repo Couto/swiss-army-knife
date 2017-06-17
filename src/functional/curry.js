@@ -1,10 +1,12 @@
 // @flow
 
-function curry(fn) {
-  return function curried(...args) {
+import type { VariadicFn } from './types.js.flow';
+
+function curry(fn: VariadicFn<*, *>) {
+  return function curried(...args: *[]) {
     return args.length >= fn.length
       ? fn(...args)
-      : (...newArgs) => curried(...[...args, ...newArgs]);
+      : (...newArgs: *[]) => curried(...[...args, ...newArgs]);
   };
 }
 
