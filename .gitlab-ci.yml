@@ -3,7 +3,7 @@ image: registry.gitlab.com/couto/swiss-army-knife
 # Speed up Yarn instalation
 
 before_script:
-  - mkdir .tmp
+  - mkdir -p .tmp
   - export HOME="$(pwd)/.tmp"
 
 cache:
@@ -22,29 +22,22 @@ dependencies:
   stage: dependencies
   script:
     - yarn install
-    - yarn pack --filename swiss-army-knife.tgz
-  # artifacts:
-  #   paths:
-  #     - swiss-army-knife.tgz
 
 # Test Stage
 
 eslint:
   stage: tests
   script:
-    # - tar -vxzf swiss-army-knife.tgz -C .
     - yarn eslint
 
 flow:
   stage: tests
   script:
-    # - tar -vxzfv swiss-army-knife.tgz -C .
     - yarn flow
 
 unit:
   stage: tests
   script:
-    # - tar -vxzfv swiss-army-knife.tgz -C .
     - yarn test
 
 # Build
